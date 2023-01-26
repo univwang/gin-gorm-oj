@@ -1,0 +1,161 @@
+info:
+  contact: {}
+paths:
+  /problem-detail:
+    get:
+      parameters:
+      - description: problem identity
+        in: query
+        name: identity
+        type: string
+      responses:
+        "200":
+          description: '{"code":"200","data":""}'
+          schema:
+            type: string
+      summary: 问题详情
+      tags:
+      - 公共方法
+  /problem-list:
+    get:
+      parameters:
+      - description: 请输入当前页，默认第一页
+        in: query
+        name: page
+        type: integer
+      - description: size
+        in: query
+        name: size
+        type: integer
+      - description: category_identity
+        in: query
+        name: category_identity
+        type: string
+      - description: keyword
+        in: query
+        name: keyword
+        type: string
+      responses:
+        "200":
+          description: '{"code":"200","data":""}'
+          schema:
+            type: string
+      summary: 问题列表
+      tags:
+      - 公共方法
+  /submit-list:
+    get:
+      parameters:
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: size
+        in: query
+        name: size
+        type: integer
+      - description: problem_identity
+        in: query
+        name: problem_identity
+        type: string
+      - description: user_identity
+        in: query
+        name: user_identity
+        type: string
+      - description: status
+        in: query
+        name: status
+        type: integer
+      responses:
+        "200":
+          description: '{"code":"200","data":""}'
+          schema:
+            type: string
+      summary: 提交列表
+      tags:
+      - 公共方法
+  /user-detail:
+    get:
+      parameters:
+      - description: user identity
+        in: query
+        name: identity
+        type: string
+      responses:
+        "200":
+          description: '{"code":"200","msg":""}'
+          schema:
+            type: string
+      summary: 用户详情
+      tags:
+      - 公共方法
+  /user-login:
+    post:
+      parameters:
+      - description: username
+        in: formData
+        name: username
+        type: string
+      - description: password
+        in: formData
+        name: password
+        type: string
+      responses:
+        "200":
+          description: '{"code":"200","msg":"","data":""}'
+          schema:
+            type: string
+      summary: 用户登录
+      tags:
+      - 公共方法
+  /user-register:
+    post:
+      parameters:
+      - description: name
+        in: formData
+        name: name
+        required: true
+        type: string
+      - description: mail
+        in: formData
+        name: mail
+        required: true
+        type: string
+      - description: password
+        in: formData
+        name: password
+        required: true
+        type: string
+      - description: phone
+        in: formData
+        name: phone
+        type: string
+      - description: code
+        in: formData
+        name: code
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{"code":"200","msg":"","data":""}'
+          schema:
+            type: string
+      summary: 用户注册
+      tags:
+      - 公共方法
+  /user-send_code:
+    post:
+      parameters:
+      - description: email
+        in: formData
+        name: email
+        type: string
+      responses:
+        "200":
+          description: '{"code":"200","msg":"","data":""}'
+          schema:
+            type: string
+      summary: 发送验证码
+      tags:
+      - 公共方法
+swagger: "2.0"
