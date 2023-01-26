@@ -13,9 +13,10 @@ func TestCreateTable(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	db.AutoMigrate(models.ProblemBasic{})
-	db.AutoMigrate(models.SubmitBasic{})
-	db.AutoMigrate(models.UserBasic{})
+	db.AutoMigrate(models.TestCase{})
 	db.AutoMigrate(models.CategoryBasic{})
 	db.AutoMigrate(models.ProblemCategory{})
+	db.AutoMigrate(models.ProblemBasic{})
+	db.AutoMigrate(models.UserBasic{})
+	db.AutoMigrate(models.SubmitBasic{})
 }

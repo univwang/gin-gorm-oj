@@ -16,6 +16,7 @@ import (
 type UserClaims struct {
 	Identity string `json:"identity"`
 	Name     string `json:"name"`
+	IsAdmin  int    `json:"is_admin"`
 	jwt.StandardClaims
 }
 
@@ -30,10 +31,11 @@ var myKey = []byte("gin-gorm-oj-key")
 
 // GeneratorToken
 // 生成token
-func GeneratorToken(identity string, name string) (string, error) {
+func GeneratorToken(identity string, name string, IsAdmin int) (string, error) {
 	UserClaim := &UserClaims{
 		Identity:       identity,
 		Name:           name,
+		IsAdmin:        IsAdmin,
 		StandardClaims: jwt.StandardClaims{},
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, UserClaim)
@@ -44,9 +46,9 @@ func GeneratorToken(identity string, name string) (string, error) {
 	return tokenString, nil
 }
 
-// TestAnalyseToken
+// AnalyseToken
 // 解析token
-func TestAnalyseToken(tokenString string) (*UserClaims, error) {
+func AnalyseToken(tokenString string) (*UserClaims, error) {
 	UserClaim := new(UserClaims)
 	claims, err := jwt.ParseWithClaims(tokenString, UserClaim, func(token *jwt.Token) (interface{}, error) {
 		return myKey, nil

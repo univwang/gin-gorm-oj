@@ -6,12 +6,13 @@ import (
 
 type ProblemBasic struct {
 	gorm.Model
-	Identity        string             `gorm:"column:identity;type:varchar(100);" json:"identity"`
-	ProblemCategory []*ProblemCategory `gorm:"foreignKey:problem_id;references:id"` //关联问题分类表
-	Title           string             `gorm:"column:title;type:varchar(100);" json:"title"`
-	Content         string             `gorm:"column:content;type:text;" json:"content"`
-	MaxRuntime      string             `gorm:"column:max_runtime;type:int(11)" json:"max_runtime"`
-	MaxMem          string             `gorm:"column:max_mem;type:int(11)" json:"max_mem"`
+	Identity          string             `gorm:"column:identity;type:varchar(100);" json:"identity"`
+	ProblemCategories []*ProblemCategory `gorm:"foreignKey:problem_id;references:id"` //关联问题分类表
+	Title             string             `gorm:"column:title;type:varchar(100);" json:"title"`
+	Content           string             `gorm:"column:content;type:text;" json:"content"`
+	MaxRuntime        int                `gorm:"column:max_runtime;type:int(11)" json:"max_runtime"`
+	MaxMem            int                `gorm:"column:max_mem;type:int(11)" json:"max_mem"`
+	TestCases         []*TestCase        `gorm:"foreignKey:problem_identity;references:identity"`
 }
 
 func (p *ProblemBasic) TableName() string {
@@ -19,7 +20,7 @@ func (p *ProblemBasic) TableName() string {
 }
 
 func GetProblemList(keyword string, categoryIdentity string) *gorm.DB {
-	tx := DB.Model(new(ProblemBasic)).Preload("ProblemCategory").Preload("ProblemCategory.CategoryBasic").
+	tx := DB.Model(new(ProblemBasic)).Preload("ProblemCategories").Preload("ProblemCategories.CategoryBasic").
 		Where("title like ? OR content like ?", "%"+keyword+"%", "%"+keyword+"%")
 
 	if categoryIdentity != "" {
