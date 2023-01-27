@@ -3,14 +3,15 @@ package helper
 import (
 	"crypto/md5"
 	"fmt"
-	"github.com/dgrijalva/jwt-go"
-	"github.com/jordan-wright/email"
-	uuid "github.com/satori/go.uuid"
 	"log"
 	"math/rand"
 	"net/smtp"
 	"strconv"
 	"time"
+
+	"github.com/dgrijalva/jwt-go"
+	"github.com/jordan-wright/email"
+	uuid "github.com/satori/go.uuid"
 )
 
 type UserClaims struct {
@@ -64,7 +65,7 @@ func AnalyseToken(tokenString string) (*UserClaims, error) {
 
 func SendCode(toUserEmail string, code string) error {
 	e := email.NewEmail()
-	e.From = "Get <1151695676@qq.com>"
+	e.From = "GO-OJ练习平台 <1151695676@qq.com>"
 	e.To = []string{toUserEmail}
 	e.Subject = "gin-gorm-oj验证码"
 	e.HTML = []byte("<h1>您的验证码：<b>" + code + "</b><h1>")
