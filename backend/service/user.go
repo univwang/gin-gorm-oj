@@ -15,7 +15,7 @@ import (
 
 // GetUserDetail
 // @Tags 公共方法
-// @Summary 用户详情
+// @Summary 用户信息
 // @Param identity query string false "user identity"
 // @Success 200 {string} json "{"code":"200","msg":""}"
 // @Router /user-detail [get]
@@ -40,6 +40,31 @@ func GetUserDetail(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"code": 200,
 		"msg":  date,
+	})
+}
+
+// GetUserInfo
+// @Tags 用户私有方法
+// @Summary 用户详情
+// @Param authorization header string true "authorization"
+// @Success 200 {string} json "{"code":"200","msg":""}"
+// @Router /me/user-info [get]
+func GetUserInfo(c *gin.Context) {
+	u, _ := c.Get("user")
+	userClaim := u.(*helper.UserClaims)
+	data := new(models.UserBasic)
+	err := models.DB.Omit("password").
+		Where("identity", userClaim.Identity).Find(&data).Error
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "Get User Info By token:" + userClaim.Identity + " Error" + err.Error(),
+		})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"code": 200,
+		"msg":  data,
 	})
 }
 
@@ -136,6 +161,7 @@ func SendCode(c *gin.Context) {
 // @Param mail formData string true "mail"
 // @Param password formData string true "password"
 // @Param phone formData string false "phone"
+// @Param photo formData string false "photo"
 // @Param code formData string true "code"
 // @Success 200 {string} json "{"code":"200","msg":"","data":""}"
 // @Router /user-register [post]
@@ -145,7 +171,8 @@ func Register(c *gin.Context) {
 	password := c.PostForm("password")
 	userCode := c.PostForm("code")
 	phone := c.PostForm("phone")
-
+	photo := c.PostForm("photo")
+	//https://raw.githubusercontent.com/univwang/img/master/20230202162622.png
 	if mail == "" || name == "" || password == "" || userCode == "" {
 		c.JSON(http.StatusOK, gin.H{
 			"code": "-1",
@@ -193,6 +220,7 @@ func Register(c *gin.Context) {
 		Name:     name,
 		Password: helper.GetMd5(password),
 		Phone:    phone,
+		Photo:    photo,
 		Mail:     mail,
 	}
 

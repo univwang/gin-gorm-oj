@@ -71,7 +71,7 @@ func SendCode(toUserEmail string, code string) error {
 	e.Subject = "gin-gorm-oj验证码"
 	e.HTML = []byte("<h1>您的验证码：<b>" + code + "</b><h1>")
 	//xujzslhdysowhgia
-	err := e.Send("smtp.qq.com:587", smtp.PlainAuth("", "1151695676@qq.com", "xujzslhdysowhgia", "smtp.qq.com"))
+	err := e.Send("smtp.qq.com:587", smtp.PlainAuth("", "1151695676@qq.com", "altrxsqpydpngieh", "smtp.qq.com"))
 	//err := e.SendWithTLS("smtp.qq.com:587",
 	//	smtp.PlainAuth("", "2162768982@qq.com", "wqy610366", "smtp.qq.com"),
 	//	&tls.Config{InsecureSkipVerify: true, ServerName: "smtp.qq.com"})

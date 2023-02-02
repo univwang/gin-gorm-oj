@@ -237,6 +237,22 @@ paths:
       summary: 代码提交
       tags:
       - 用户私有方法
+  /me/user-info:
+    get:
+      parameters:
+      - description: authorization
+        in: header
+        name: authorization
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{"code":"200","msg":""}'
+          schema:
+            type: string
+      summary: 用户详情
+      tags:
+      - 用户私有方法
   /problem-detail:
     get:
       parameters:
@@ -341,7 +357,7 @@ paths:
           description: '{"code":"200","msg":""}'
           schema:
             type: string
-      summary: 用户详情
+      summary: 用户信息
       tags:
       - 公共方法
   /user-login:
@@ -384,6 +400,10 @@ paths:
       - description: phone
         in: formData
         name: phone
+        type: string
+      - description: photo
+        in: formData
+        name: photo
         type: string
       - description: code
         in: formData

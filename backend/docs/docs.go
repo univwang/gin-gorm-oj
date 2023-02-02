@@ -368,6 +368,31 @@ const docTemplate = `{
                 }
             }
         },
+        "/me/user-info": {
+            "get": {
+                "tags": [
+                    "用户私有方法"
+                ],
+                "summary": "用户详情",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "authorization",
+                        "name": "authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\":\"200\",\"msg\":\"\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/problem-detail": {
             "get": {
                 "tags": [
@@ -517,7 +542,7 @@ const docTemplate = `{
                 "tags": [
                     "公共方法"
                 ],
-                "summary": "用户详情",
+                "summary": "用户信息",
                 "parameters": [
                     {
                         "type": "string",
@@ -598,6 +623,12 @@ const docTemplate = `{
                         "type": "string",
                         "description": "phone",
                         "name": "phone",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "string",
+                        "description": "photo",
+                        "name": "photo",
                         "in": "formData"
                     },
                     {

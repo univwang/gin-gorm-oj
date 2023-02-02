@@ -45,6 +45,8 @@ func Router() *gin.Engine {
 	authUser := r.Group("/me", middlewares.AuthUserCheck())
 	// 代码提交
 	authUser.POST("/submit", service.Submit)
+	// 查看用户详情
+	authUser.GET("/user-info", service.GetUserInfo)
 
 	return r
 }
